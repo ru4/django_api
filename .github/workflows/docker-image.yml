@@ -19,15 +19,17 @@ jobs:
       run: docker compose build
   
   test:
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
+    
     - name: Run tests
-      needs: build
       run: docker compose run djangoapi python manage.py test
       id: tests
   
   deploy:
+    needs: test
     if: success() && github.ref == 'refs/heads/master'
 
     runs-on: ubuntu-latest
@@ -35,7 +37,6 @@ jobs:
     steps:
     
     - name: Deploy to remote Docker host over SSH
-      needs: test
       uses: appleboy/ssh-action@v0.1.7
 
       with:
