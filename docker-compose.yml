@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+  djangoapi:
+    container_name: djangoapi
+    image: djangoapi
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 8000:8000
