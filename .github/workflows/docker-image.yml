@@ -28,7 +28,7 @@ jobs:
       with:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USERNAME }}
-        privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
           git clone https://github.com/${{ github.repository }}.git
           cd $(echo ${{ github.repository }} | cut -d '/' -f 2)
