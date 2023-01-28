@@ -23,8 +23,8 @@ jobs:
 
     - name: Deploy to remote Docker host over SSH
       if: success() && github.ref == 'refs/heads/master'
-      uses: appleboy/ssh-action@main
-
+      uses: invi5H/ssh-action@v1
+      
       with:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USERNAME }}
