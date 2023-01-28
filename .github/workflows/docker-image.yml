@@ -30,7 +30,8 @@ jobs:
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
+          rm -R $(echo ${{ github.repository }} | cut -d '/' -f 2)
           git clone https://github.com/${{ github.repository }}.git
           cd $(echo ${{ github.repository }} | cut -d '/' -f 2)
-          docker compose down
-          docker compose up -d
+          sudo docker compose down
+          sudo docker compose up -d
