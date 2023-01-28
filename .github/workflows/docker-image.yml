@@ -19,3 +19,18 @@ jobs:
 
     - name: Run tests
       run: docker compose run djangoapi python manage.py test
+      id: tests
+
+    - name: Deploy to remote Docker host over SSH
+      if: success() && github.ref == 'refs/heads/master'
+      uses: appleboy/ssh-action@main
+
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+        script: |
+          docker compose pull
+          docker compose down
+          docker compose up -d
