@@ -24,7 +24,9 @@ jobs:
       id: tests
 
     - name: Deploy to remote Docker host over SSH
-      if: steps.tests.outcome == 'success' && github.ref == 'refs/heads/master'
+      if: steps.tests.outcome == 'success'
       # uses: appleboy/ssh-action@v0.1.7
 
-      run: docker save djangoapi | ssh -C -i ${{ secrets.SSH_PRIVATE_KEY }} ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} sudo docker load
+      run: |
+            docker image rm djangoapi
+            docker save djangoapi | ssh -C -i ${{ secrets.SSH_PRIVATE_KEY }} ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} sudo docker load
